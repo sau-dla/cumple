@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Ritual</title>
+    <!-- Librería para el confeti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         /* Estilos Generales */
         body {
-            /* Fondo gris oscuro suave (Negro amigable) */
             background-color: #1f1f1f; 
             background-image: radial-gradient(circle at center, #2a2a2a 0%, #121212 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,6 +31,8 @@
             width: 100%;
             text-align: center;
             border-top: 6px solid #ff5e5e;
+            position: relative;
+            overflow: hidden;
         }
 
         /* Títulos */
@@ -83,7 +86,7 @@
             margin-right: 10px;
         }
 
-        /* El Comunicado (Estilo sencillo) */
+        /* El Comunicado */
         .warning-box {
             background-color: #222222;
             border: 1px solid #444;
@@ -98,7 +101,7 @@
             text-transform: uppercase;
             font-weight: bold;
             font-size: 1rem;
-            text-align: center; /* Centrado */
+            text-align: center;
             margin-bottom: 15px;
             display: block;
         }
@@ -120,7 +123,7 @@
             text-align: center;
         }
 
-        /* Botón */
+        /* Botones */
         .btn {
             margin-top: 30px;
             padding: 12px 35px;
@@ -133,6 +136,9 @@
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(255, 94, 94, 0.3);
+            font-size: 0.9rem;
+            width: 100%;
+            max-width: 300px;
         }
         
         .btn:hover {
@@ -141,11 +147,69 @@
             box-shadow: 0 6px 20px rgba(255, 94, 94, 0.5);
         }
 
+        .btn-phase-two {
+            background-color: #444;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .btn-phase-two:hover {
+            background-color: #555;
+        }
+
+        /* Sección de Celebración */
+        .celebration-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ff5e5e;
+            animation: fadeIn 1s ease;
+        }
+
+        .heart {
+            font-size: 80px;
+            color: #ffffff;
+            animation: heartbeat 1.2s infinite;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .birthday-text {
+            font-size: 2rem;
+            color: #ff5e5e;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .sub-text {
+            color: #ff8e8e; /* Un tono más cálido para el mensaje personal */
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        /* Animaciones */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
+        
         <h1>INSTRUCCIONES</h1>
         <h2>Seguir al pie de la letra</h2>
 
@@ -171,8 +235,82 @@
             </div>
         </div>
         
-        <button class="btn" onclick="alert('¡Recuerda! No abras la mano hasta que esa persona conteste tu pregunta.')">Comenzar</button>
+        <!-- Botón que cambiará -->
+        <button id="action-btn" class="btn" onclick="changeButtonState()">Comenzar</button>
+
+        <!-- Sección de Celebración con mensaje personalizado -->
+        <div id="celebration-content" class="celebration-content">
+            <div class="heart">🤍</div>
+            <div class="birthday-text">¡FELIZ CUMPLEAÑOS!</div>
+            <div class="sub-text">
+                Que todos tus deseos se cumplan, mi guerrero saiyayin.<br>
+                Te amo mucho, con demasiado. 💫
+            </div>
+        </div>
+
     </div>
 
+    <script>
+        function changeButtonState() {
+            const btn = document.getElementById('action-btn');
+            
+            // Cambiar texto y estilo del botón
+            btn.textContent = "Ya respondió la pregunta";
+            btn.classList.add('btn-phase-two');
+            
+            // Cambiar la función del botón para la siguiente vez que se presione
+            btn.onclick = showCelebration;
+        }
+
+        function showCelebration() {
+            // Mostrar la sección de celebración
+            const celebration = document.getElementById('celebration-content');
+            celebration.style.display = 'flex';
+            
+            // Deshabilitar el botón para que no se presione mil veces
+            const btn = document.getElementById('action-btn');
+            btn.textContent = "¡Disfruta tu regalo!";
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.style.cursor = "default";
+
+            // Lanzar confeti
+            launchConfetti();
+            
+            // Scroll suave hacia la celebración
+            celebration.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function launchConfetti() {
+            var duration = 4 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                // Confeti rojo y blanco
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: ['#ff5e5e', '#ffffff', '#aaaaaa']
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: ['#ff5e5e', '#ffffff', '#aaaaaa']
+                }));
+            }, 250);
+        }
+    </script>
 </body>
 </html>
