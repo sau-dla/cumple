@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goku pide perdón</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f8ff;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 90%;
+        }
+
+        .goku-gif {
+            width: 350px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border: 3px solid #ff9900;
+        }
+
+        /* Ocultar imagen por defecto */
+        .oculto-img {
+            display: none;
+        }
+
+        h1 {
+            color: #ff4d4d;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .botones {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #btnSi {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #btnSi:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+        }
+
+        #btnNo {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+        
+        .oculto {
+            display: none;
+        }
+
+        .mensaje-final {
+            color: #2196F3;
+            font-size: 1.8rem;
+            font-weight: bold;
+            animation: latido 1s infinite;
+        }
+
+        @keyframes latido {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- GIF de Goku triste/suplicando -->
+        <img id="goku_triste" src="imagenes/goku_triste.gif" alt="Goku suplicando" class="goku-gif">
+        
+        <!-- GIF de Goku feliz (oculto al inicio) -->
+        <img id="goku_feliz" src="imagenes/goku_feliz.gif" alt="Goku feliz" class="goku-gif oculto-img">
+        
+        <h1 id="titulo">Hola soy Goku, perdónala por favor 🙏</h1>
+        
+        <div class="botones" id="contenedorBotones">
+            <button id="btnSi">Está bien</button>
+            <button id="btnNo">No</button>
+        </div>
+    </div>
+
+    <script>
+        const btnSi = document.getElementById('btnSi');
+        const btnNo = document.getElementById('btnNo');
+        const titulo = document.getElementById('titulo');
+        const contenedorBotones = document.getElementById('contenedorBotones');
+        const gokuTriste = document.getElementById('goku_triste');
+        const gokuFeliz = document.getElementById('goku_feliz');
+
+        // Lógica para el botón SÍ
+        btnSi.addEventListener('click', () => {
+            // Ocultar Goku triste y mostrar Goku feliz
+            gokuTriste.classList.add('oculto-img');
+            gokuFeliz.classList.remove('oculto-img');
+            
+            // Cambiar el mensaje
+            titulo.innerText = "¡Gracias guerrero Saiyajin! Ella te ama ❤️";
+            titulo.classList.add('mensaje-final');
+            
+            // Ocultar botones
+            contenedorBotones.classList.add('oculto');
+        });
+
+        // Lógica para el botón NO (Huir del cursor)
+        function moverBoton() {
+            const anchoVentana = window.innerWidth;
+            const altoVentana = window.innerHeight;
+
+            const nuevaPosicionX = Math.random() * (anchoVentana - 150);
+            const nuevaPosicionY = Math.random() * (altoVentana - 50);
+
+            btnNo.style.position = 'absolute';
+            btnNo.style.left = nuevaPosicionX + 'px';
+            btnNo.style.top = nuevaPosicionY + 'px';
+        }
+
+        btnNo.addEventListener('mouseover', moverBoton);
+        btnNo.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moverBoton();
+        });
+    </script>
+</body>
+</html>
