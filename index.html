@@ -3,158 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goku pide perdón</title>
+    <title>El Ritual</title>
     <style>
+        /* Estilos Generales */
         body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
+            /* Fondo gris oscuro suave (Negro amigable) */
+            background-color: #1f1f1f; 
+            background-image: radial-gradient(circle at center, #2a2a2a 0%, #121212 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0f8ff;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #e0e0e0;
         }
 
+        /* Contenedor Principal */
         .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
+            background-color: #2b2b2b;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            max-width: 90%;
+            box-shadow: 0 10px 40px rgba(255, 80, 80, 0.15); 
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border-top: 6px solid #ff5e5e;
         }
 
-        .goku-gif {
-            width: 350px;
-            height: auto;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            border: 3px solid #ff9900;
-        }
-
-        /* Ocultar imagen por defecto */
-        .oculto-img {
-            display: none;
-        }
-
+        /* Títulos */
         h1 {
-            color: #ff4d4d;
-            font-size: 2rem;
+            color: #ff5e5e;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+
+        h2 {
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            font-weight: 400;
             margin-bottom: 30px;
             text-transform: uppercase;
-            font-weight: 900;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+            display: inline-block;
         }
 
-        .botones {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
+        /* Lista de Instrucciones */
+        .instructions-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-bottom: 30px;
         }
 
-        button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s;
+        .instructions-list li {
+            background-color: #333333;
+            margin-bottom: 12px;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            border-left: 5px solid #ff5e5e;
+            transition: transform 0.2s, background-color 0.2s;
+            color: #f0f0f0;
+        }
+
+        .instructions-list li:hover {
+            transform: translateX(5px);
+            background-color: #3d3d3d;
+        }
+
+        .step-number {
+            color: #ff5e5e;
+            font-weight: 800;
+            margin-right: 10px;
+        }
+
+        /* El Comunicado (Estilo sencillo) */
+        .warning-box {
+            background-color: #222222;
+            border: 1px solid #444;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .warning-box-title {
+            color: #ff5e5e;
+            text-transform: uppercase;
             font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            text-align: center; /* Centrado */
+            margin-bottom: 15px;
+            display: block;
         }
 
-        #btnSi {
-            background-color: #4CAF50;
+        .warning-box p {
+            color: #cccccc;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0 0 15px 0;
+        }
+
+        .final-warning {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #444;
+            color: #ff8e8e;
+            font-weight: bold;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* Botón */
+        .btn {
+            margin-top: 30px;
+            padding: 12px 35px;
+            background-color: #ff5e5e;
+            border: none;
             color: white;
-        }
-
-        #btnSi:hover {
-            transform: scale(1.1);
-            background-color: #45a049;
-        }
-
-        #btnNo {
-            background-color: #f44336;
-            color: white;
-            position: relative;
+            border-radius: 50px;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 94, 94, 0.3);
         }
         
-        .oculto {
-            display: none;
+        .btn:hover {
+            background-color: #ff7b7b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 94, 94, 0.5);
         }
 
-        .mensaje-final {
-            color: #2196F3;
-            font-size: 1.8rem;
-            font-weight: bold;
-            animation: latido 1s infinite;
-        }
-
-        @keyframes latido {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- GIF de Goku triste/suplicando -->
-        <img id="goku_triste" src="imagenes/goku_triste.gif" alt="Goku suplicando" class="goku-gif">
-        
-        <!-- GIF de Goku feliz (oculto al inicio) -->
-        <img id="goku_feliz" src="imagenes/goku_feliz.gif" alt="Goku feliz" class="goku-gif oculto-img">
-        
-        <h1 id="titulo">Hola soy Goku, perdónala por favor 🙏</h1>
-        
-        <div class="botones" id="contenedorBotones">
-            <button id="btnSi">Está bien</button>
-            <button id="btnNo">No</button>
+        <h1>INSTRUCCIONES</h1>
+        <h2>Seguir al pie de la letra</h2>
+
+        <ul class="instructions-list">
+            <li><span class="step-number">01.</span> Lea las instrucciones detenidamente.</li>
+            <li><span class="step-number">02.</span> Cerrar los ojos.</li>
+            <li><span class="step-number">03.</span> Extender la mano.</li>
+            <li><span class="step-number">04.</span> Recibe lo que te van a dar sin abrir los ojos.</li>
+            <li><span class="step-number">05.</span> Cierra la mano.</li>
+            <li><span class="step-number">06.</span> Pide un deseo en voz alta.</li>
+            <li><span class="step-number">07.</span> Abrir los ojos.</li>
+            <li><span class="step-number">08.</span> Mantén la mano empuñada sin ver qué hay en ella.</li>
+        </ul>
+
+        <div class="warning-box">
+            <span class="warning-box-title">⚠️ Comunicado Importante</span>
+            <p>
+                Si su deseo no se cumplió, vuelva a leer las instrucciones. Si lo hiciste todo como lo dice en las instrucciones y aun así no funcionó, sin abrir la mano, pregúntale a la persona que te dio el regalo: ¿por qué no se cumplió el deseo?
+            </p>
+            
+            <div class="final-warning">
+                RECUERDA: NO ABRAS LA MANO HASTA QUE ESA PERSONA CONTESTE TU PREGUNTA.
+            </div>
         </div>
+        
+        <button class="btn" onclick="alert('¡Recuerda! No abras la mano hasta que esa persona conteste tu pregunta.')">Comenzar</button>
     </div>
 
-    <script>
-        const btnSi = document.getElementById('btnSi');
-        const btnNo = document.getElementById('btnNo');
-        const titulo = document.getElementById('titulo');
-        const contenedorBotones = document.getElementById('contenedorBotones');
-        const gokuTriste = document.getElementById('goku_triste');
-        const gokuFeliz = document.getElementById('goku_feliz');
-
-        // Lógica para el botón SÍ
-        btnSi.addEventListener('click', () => {
-            // Ocultar Goku triste y mostrar Goku feliz
-            gokuTriste.classList.add('oculto-img');
-            gokuFeliz.classList.remove('oculto-img');
-            
-            // Cambiar el mensaje
-            titulo.innerText = "¡Gracias guerrero Saiyajin! Ella te ama ❤️";
-            titulo.classList.add('mensaje-final');
-            
-            // Ocultar botones
-            contenedorBotones.classList.add('oculto');
-        });
-
-        // Lógica para el botón NO (Huir del cursor)
-        function moverBoton() {
-            const anchoVentana = window.innerWidth;
-            const altoVentana = window.innerHeight;
-
-            const nuevaPosicionX = Math.random() * (anchoVentana - 150);
-            const nuevaPosicionY = Math.random() * (altoVentana - 50);
-
-            btnNo.style.position = 'absolute';
-            btnNo.style.left = nuevaPosicionX + 'px';
-            btnNo.style.top = nuevaPosicionY + 'px';
-        }
-
-        btnNo.addEventListener('mouseover', moverBoton);
-        btnNo.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moverBoton();
-        });
-    </script>
 </body>
 </html>
